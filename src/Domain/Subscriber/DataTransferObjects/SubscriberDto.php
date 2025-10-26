@@ -22,7 +22,6 @@ class SubscriberDto extends CommonDto
     )
     {}
 
-
     public static function fromRequest(SubscriberRequest $request)
     {
         return new self(

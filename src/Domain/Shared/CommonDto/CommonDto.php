@@ -2,6 +2,8 @@
 namespace Domain\Shared\CommonDto;
 
 use Illuminate\Database\Eloquent\Collection;
+use Reflection;
+use ReflectionClass;
 
 abstract class CommonDto
 {
@@ -20,7 +22,24 @@ abstract class CommonDto
                 $d->toArray()
             );
         });
-        
+
         return $collection;
+    }
+
+    public function all()
+    {
+        $reflection = new ReflectionClass(static::class);
+        $properties = $reflection->getProperties();
+
+        $values = [];
+        foreach($properties as $key){
+
+            $key->setAccessible(true);
+            $values = [
+                ...$values,
+                $key->getName() => $key->getValue($this)
+            ];
+        };
+        return $values;
     }
 }
