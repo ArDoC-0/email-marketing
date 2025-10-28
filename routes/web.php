@@ -6,6 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class, 'index']);
 
-Route::middleware('auth')->group(function(){
-    Route::post('/subscriber/create', [SubscriberController::class, 'store'])->name('subscriber.create');
-});
+       Route::resource('subscriber', SubscriberController::class);
