@@ -10,11 +10,20 @@ use Illuminate\Http\Request;
 class SubscriberController extends Controller
 {
     //
-    public function store(SubscriberRequest $request)
+    public function store(SubscriberRequest $subscriberRequest, Request $request)
     {
-        $subscriberDto = SubscriberDto::fromRequest($request);
+        $subscriberDto = SubscriberDto::fromRequest($subscriberRequest);
 
-        $subscriber = UpertSubscriberAction::execute($subscriberDto, $request->user());
+        UpertSubscriberAction::execute($subscriberDto, $request->user());
+
+        return redirect()->route('subscriber.index');
+    }
+
+    public function update(SubscriberRequest $subscriberRequest, Request $request)
+    {
+        $subscriberDto = SubscriberDto::fromRequest($subscriberRequest);
+
+        UpertSubscriberAction::execute($subscriberDto, $request->user());
 
         return redirect()->route('subscriber.index');
     }
