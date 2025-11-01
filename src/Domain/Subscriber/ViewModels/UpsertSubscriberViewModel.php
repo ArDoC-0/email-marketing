@@ -13,15 +13,16 @@ class UpsertSubscriberViewModel extends ViewModel
 {
 
     public function __construct(
-        public readonly ?Subscriber $subscriber = null
+        public ?Subscriber $subscriber = null,
+        // public Tag $tag,
+        // public Form $form
     )
     {
-        
     }
 
     public function subscriber() : ?SubscriberDto
     {
-        if(!$this->subscriber()){
+        if(!$this->subscriber){
             return null;
         }
         return SubscriberDto::fromArray($this->subscriber->load('tags', 'form')->toArray());
@@ -29,11 +30,11 @@ class UpsertSubscriberViewModel extends ViewModel
 
     public function forms()
     {
-        return Form::all()->map(fn (Form $from) => FormDto::fromArray($from->toArray()));
+        return Form::all()->map(fn (Form $from) => FormDto::fromArray($from->toArray()))->toArray();
     }
 
     public function tags()
     {
-        return Tag::all()->map(fn (Tag $tag) => TagDto::fromArray($tag->toArray()));
+        return Tag::all()->map(fn (Tag $tag) => TagDto::fromArray($tag->toArray()))->toArray();
     }
 }

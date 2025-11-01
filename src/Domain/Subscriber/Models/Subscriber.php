@@ -2,12 +2,15 @@
 
 namespace Domain\Subscriber\Models;
 
+use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Subscriber extends Model
+class Subscriber extends BaseModel
 {
+    use HasFactory;
     //
     protected $fillable = [
         'email',

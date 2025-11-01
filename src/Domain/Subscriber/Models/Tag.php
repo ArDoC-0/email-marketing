@@ -2,11 +2,14 @@
 
 namespace Domain\Subscriber\Models;
 
+use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Tag extends Model
+class Tag extends BaseModel
 {
+
     protected $fillable = [
         'title',
     ];

@@ -6,23 +6,27 @@ use Illuminate\Contracts\Support\Arrayable;
 use Reflection;
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Support\Str;
+
 
 abstract class ViewModel implements Arrayable
 {
 
     public function toArray()
     {
-        $reflection = collect((new ReflectionClass($this))->getMethods())
-        ->reject(function (ReflectionMethod $method){
-            return in_array($method, ['__construct', 'toArray']);
-        })
-        ->filter(function (ReflectionMethod $method){
-            return in_array('public', Reflection::getModifierNames($method->getModifiers()));
-        })
-        ->mapWithKeys(fn (ReflectionMethod $method)=> [
-            Str::snake($method) => $this->{$method->getName()}()
+
+        $attributes = collect((new ReflectionClass($this))->getMethods())
+            ->reject(
+                fn(ReflectionMethod $method) => in_array($method->getName(), ['__construct', 'toArray'])
+            )
+            ->filter(
+                fn(ReflectionMethod $method) => in_array('public', Reflection::getModifierNames($method->getModifiers()))
+            )
+        ->mapWithKeys(fn (ReflectionMethod $method) => [
+            Str::snake($method->getName()) => $this->{$method->getName()}()
         ])
         ->toArray();
-        
+
+        return $attributes;
     }
 }

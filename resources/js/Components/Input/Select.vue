@@ -26,11 +26,11 @@ export default {
 
 <template>
     <div>
-        <label for="{{ label }}">
+        <label :for="label">
             {{ label }}
         </label>
-        <select :is-multiple="isMultiple" value="{{modelValue}}" name="{{ label }}" id="{{ label }}" >
-            <option v-for="d in data" value="{{d.id}}">
+        <select :is-multiple="isMultiple" multiple :value="modelValue" :name="label" :id="label" >
+            <option v-for="d in data" :value="d.id">
                 {{ d.title }}
             </option>
         </select>

@@ -11,11 +11,14 @@ use Inertia\Inertia;
 
 class SubscriberController extends Controller
 {
-    
+    public function __construct(
+        public UpsertSubscriberViewModel $upsertSubscriberView
+    ) {}
+
     public function create()
     {
-        return Inertia::render('Subscriber/create', [
-            //'model' => new UpsertSubscriberViewModel()
+        return Inertia::render('Subscriber/Create',  [
+            'model' => new UpsertSubscriberViewModel()
         ]);
     }
     public function store(SubscriberRequest $subscriberRequest, Request $request)

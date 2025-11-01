@@ -4,18 +4,27 @@ namespace Domain\Shared\CommonDto;
 use Illuminate\Database\Eloquent\Collection;
 use Reflection;
 use ReflectionClass;
+use ReflectionParameter;
 
 abstract class CommonDto
 {
 
-    protected static function fromArray(array $data)
+    public static function fromArray(array $data)
     {
+        $__construct_parameters = collect((new ReflectionClass(static::class))
+        ->getConstructor()
+        ->getParameters())
+        ->map(fn(ReflectionParameter $param) => $param->getName())
+        ->toArray();
+
+        $expected_parameters_and_values = collect($data)->filter(fn ($param, $key) => in_array($key, $__construct_parameters))->all();
+
         return new static(
-            ...$data
+            ...$expected_parameters_and_values
         );
     }
 
-    protected static function collection(Collection $data)
+    public static function collection(Collection $data)
     {
         $collection = $data->map(function($d){
             static::fromArray(
@@ -28,7 +37,7 @@ abstract class CommonDto
 
     public function all()
     {
-        $reflection = new ReflectionClass(static::class);
+        $reflection = new ReflectionClass($this);
         $properties = $reflection->getProperties();
 
         $values = [];
