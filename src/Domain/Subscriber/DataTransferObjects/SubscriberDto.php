@@ -7,6 +7,7 @@ use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection as SupportCollection;
 
 class SubscriberDto extends CommonDto
 {
@@ -17,7 +18,7 @@ class SubscriberDto extends CommonDto
         public readonly string $first_name,
         public readonly string $last_name,
 
-        public readonly ?Collection $tags,
+        public readonly SupportCollection|Collection $tags,
         public readonly ?FormDto $form
     )
     {}

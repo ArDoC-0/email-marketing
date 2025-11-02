@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('email');
 
             $table->string('first_name');
-            $table->string('lastname_name');
+            $table->string('last_name');
             $table->foreignId('user_id');
             $table->foreignId('form_id');
             $table->timestamps();

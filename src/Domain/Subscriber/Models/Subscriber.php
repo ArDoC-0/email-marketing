@@ -10,8 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Subscriber extends BaseModel
 {
-    use HasFactory;
-    //
+
     protected $fillable = [
         'email',
         'first_name',

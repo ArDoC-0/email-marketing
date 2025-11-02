@@ -2,6 +2,7 @@
 namespace Domain\Shared\CommonDto;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Reflection;
 use ReflectionClass;
 use ReflectionParameter;
@@ -26,8 +27,8 @@ abstract class CommonDto
 
     public static function collection(Collection $data)
     {
-        $collection = $data->map(function($d){
-            static::fromArray(
+        $collection = $data->map(function(Model $d){
+            return static::fromArray(
                 $d->toArray()
             );
         });
