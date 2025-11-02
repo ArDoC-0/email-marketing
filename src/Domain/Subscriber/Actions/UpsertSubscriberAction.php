@@ -21,7 +21,6 @@ class UpertSubscriberAction
             ]);
 
         $subscriber->tags()->sync($data->tags->pluck('id'));
-        $subscriber = User::find(1);
 
         return $subscriber->load('form', 'tags');
     }
