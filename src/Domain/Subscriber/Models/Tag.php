@@ -12,6 +12,7 @@ class Tag extends BaseModel
 
     protected $fillable = [
         'title',
+        'user_id'
     ];
 
     public function subscribers() : BelongsToMany

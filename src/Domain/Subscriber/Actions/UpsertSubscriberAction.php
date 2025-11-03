@@ -1,11 +1,11 @@
 <?php
 namespace Domain\Subscriber\Actions;
 
-use App\Models\User;
+use Domain\Shared\Models\User;
 use Domain\Subscriber\DataTransferObjects\SubscriberDto;
 use Domain\Subscriber\Models\Subscriber;
 
-class UpertSubscriberAction
+class UpsertSubscriberAction
 {
 
     public static function execute(SubscriberDto $data, User $user)

@@ -18,7 +18,7 @@ class SubscriberDto extends CommonDto
         public readonly string $first_name,
         public readonly string $last_name,
 
-        public readonly SupportCollection|Collection $tags,
+        public readonly null|SupportCollection|Collection $tags,
         public readonly ?FormDto $form
     )
     {}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Subscriber\SubscriberRequest;
 use Domain\Subscriber\Actions\UpertSubscriberAction;
+use Domain\Subscriber\Actions\UpsertSubscriberAction;
 use Domain\Subscriber\DataTransferObjects\SubscriberDto;
 use Domain\Subscriber\ViewModels\GetSubscriberViewModel;
 use Domain\Subscriber\ViewModels\UpsertSubscriberViewModel;
@@ -26,7 +27,7 @@ class SubscriberController extends Controller
     {
         $subscriberDto = SubscriberDto::fromRequest($subscriberRequest);
 
-        UpertSubscriberAction::execute($subscriberDto, $request->user());
+        UpsertSubscriberAction::execute($subscriberDto, $request->user());
 
         return redirect()->route('subscriber.index');
     }
@@ -35,7 +36,7 @@ class SubscriberController extends Controller
     {
         $subscriberDto = SubscriberDto::fromRequest($subscriberRequest);
 
-        UpertSubscriberAction::execute($subscriberDto, $request->user());
+        UpsertSubscriberAction::execute($subscriberDto, $request->user());
 
         return redirect()->route('subscriber.index');
     }
