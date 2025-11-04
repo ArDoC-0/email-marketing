@@ -3,7 +3,6 @@
 export default {
     props: {
         modelValue: {
-            // type: [String, Number],
             required: true
         },
         label: {
@@ -11,7 +10,7 @@ export default {
         },
         type: {
             type: String,
-            default: 'text'
+            default: () => 'text'
         }
     },
     emits: ['update:modelValue'],
@@ -23,6 +22,7 @@ export default {
     }
     
 }
+
 </script>
 
 <template>

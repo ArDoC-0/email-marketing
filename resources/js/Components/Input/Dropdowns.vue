@@ -57,6 +57,7 @@ export default {
     <Dropdowncontainer>
         <label v-for="d in data"
         class="flex flex-1 items-center gap-2 p-2 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer transition">
+
             <input v-if="isMultiple" 
             :value="d.id" 
             class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
@@ -68,6 +69,7 @@ export default {
                 class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" type="radio"
                 @change="handleUpdate(d.id)" />
             <span class="text-gray-700">{{ d.title }}</span>
+            
         </label>
     </Dropdowncontainer>
-</template>false
+</template>
