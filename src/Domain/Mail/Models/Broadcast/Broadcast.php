@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Models\Broadcast;
 
+use App\Models\SentMail;
 use Domain\Mail\Builder\Broadcast\BroadcastBuilder;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
@@ -29,5 +30,10 @@ class Broadcast extends BaseModel
     public function newEloquentBuilder($query) : BroadcastBuilder
     {
         return new BroadcastBuilder($query);
+    }
+
+    public function sent_mails()
+    {
+        return $this->morphMany(SentMail::class, 'sendable');
     }
 }
