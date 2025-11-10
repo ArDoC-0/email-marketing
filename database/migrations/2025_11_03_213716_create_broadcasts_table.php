@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('subject');
             $table->text('content');
             $table->json('filters');
+            $table->string('status')->default('draft');
             $table->foreignId('user_id');
+            $table->timestamp('sent_at');
             $table->timestamps();
         });
     }
