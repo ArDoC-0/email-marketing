@@ -20,7 +20,7 @@ class FilterCasts implements CastsAttributes
     public function set(Model $model, string $key, mixed $value, array $attributes)
     {
         return [
-            'filters' => json_decode($value)
+            'filters' => json_encode($value)
         ];
     }
 }

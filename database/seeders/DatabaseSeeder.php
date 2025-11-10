@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Mail\BroadcastSeeder;
 use Database\Seeders\Subscriber\FormSeeder;
 use Database\Seeders\Subscriber\SubscriberSeeder;
 use Database\Seeders\Subscriber\TagSeeder;
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FormSeeder::class);
         $this->call(TagSeeder::class);
         $this->call(SubscriberSeeder::class);
+        $this->call(BroadcastSeeder::class);
     }
 }

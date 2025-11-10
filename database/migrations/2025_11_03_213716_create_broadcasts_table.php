@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('subject');
             $table->text('content');
             $table->json('filters');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
