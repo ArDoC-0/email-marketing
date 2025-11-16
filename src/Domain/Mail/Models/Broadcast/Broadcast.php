@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Broadcast;
 
 use Domain\Mail\Builder\Broadcast\BroadcastBuilder;
+use Domain\Mail\Concerns\HasPerformance;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
@@ -14,6 +15,8 @@ use Domain\Shared\Models\BaseModel;
 class Broadcast extends BaseModel implements Sendable
 {
     use HasUser;
+    use HasPerformance;
+    
     protected $dataClass = BroadcastData::class;
 
     protected $casts = [
