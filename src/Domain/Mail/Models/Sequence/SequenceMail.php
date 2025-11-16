@@ -4,6 +4,7 @@ namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Contracts\Sendable;
 use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SequenceMail extends BaseModel implements Sendable
 {
@@ -16,6 +17,11 @@ class SequenceMail extends BaseModel implements Sendable
         'sequence_id'
     ];
 
+    public function sequence(): BelongsTo
+    {
+        return $this->belongsTo(Sequence::class);
+    }
+    
     public function id() : int
     {
         return $this->id;

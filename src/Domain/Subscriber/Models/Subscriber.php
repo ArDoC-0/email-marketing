@@ -2,6 +2,7 @@
 
 namespace Domain\Subscriber\Models;
 
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Concerns\WithData;
 use Domain\Shared\Models\BaseModel;
@@ -30,6 +31,11 @@ class Subscriber extends BaseModel
         'user_id'
     ];
 
+    public function sequences(): BelongsToMany
+    {
+        return $this->belongsToMany(Sequence::class);
+    }
+    
     public function tags() : BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
