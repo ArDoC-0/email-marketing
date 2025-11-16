@@ -2,6 +2,7 @@
 
 namespace Domain\Subscriber\Models;
 
+use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Concerns\WithData;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 // #[ScopedBy([Userscope::class])]
@@ -35,7 +37,12 @@ class Subscriber extends BaseModel
     {
         return $this->belongsToMany(Sequence::class);
     }
-    
+
+    public function received_mails(): HasMany
+    {
+        return $this->hasMany(SentMail::class);
+    }
+
     public function tags() : BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
