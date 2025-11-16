@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('broadcasts', function (Blueprint $table) {
+        Schema::create('sequences', function (Blueprint $table) {
             $table->id();
-            $table->string('subject');
-            $table->text('content');
-            $table->json('filters');
+            $table->string('title');
             $table->string('status')->default('draft');
-            $table->foreignId('user_id');
-            $table->timestamp('sent_at')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('broadcasts');
+        Schema::dropIfExists('sequences');
     }
 };

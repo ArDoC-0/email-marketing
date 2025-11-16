@@ -6,6 +6,12 @@ use Domain\Shared\Models\BaseModel;
 
 class Sequence extends BaseModel implements Sendable
 {
+    protected $table = 'sequences';
+
+    protected $fillable = [
+        'title',
+        'status'
+    ];
     
     public function id() : int
     {
