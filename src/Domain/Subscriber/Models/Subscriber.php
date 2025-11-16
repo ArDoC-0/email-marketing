@@ -8,6 +8,7 @@ use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Concerns\WithData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Scopes\Userscope;
+use Domain\Subscriber\Builders\SubscriberBuilder;
 use Domain\Subscriber\DataTransferObjects\SubscriberDto;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,5 +52,10 @@ class Subscriber extends BaseModel
     public function form() : BelongsTo
     {
         return $this->belongsTo(Form::class)->withDefault();
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new SubscriberBuilder($query);
     }
 }
