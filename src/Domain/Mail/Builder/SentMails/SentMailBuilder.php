@@ -3,12 +3,19 @@
 namespace Domain\Mail\Builder\SentMails;
 
 use Domain\Mail\Contracts\Sendable;
+use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ValueObject\Percent;
 use Illuminate\Database\Eloquent\Builder;
 
 class SentMailBuilder extends Builder
 {
+
+    public function wherePublished()
+    {
+        return $this->where('status', SequenceMailStatus::Published);
+    }
+
     public function countOf(Sendable $sendable) : int
     {
         return $this->whereSendable($sendable)

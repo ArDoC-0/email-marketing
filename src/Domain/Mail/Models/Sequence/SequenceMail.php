@@ -7,6 +7,7 @@ use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
@@ -17,7 +18,7 @@ class SequenceMail extends BaseModel implements Sendable
     protected $casts = [
         'filters' => FilterData::class
     ];
-    
+
     protected $fillable = [
         'subject',
         'content',
@@ -39,6 +40,11 @@ class SequenceMail extends BaseModel implements Sendable
         ->timePassedSince($mail->sent_at) >= $this->schedule->delay;
     }
 
+    public function sent_mails() : HasMany
+    {
+        return $this->hasMany(SentMail::class);
+    }
+    
     public function sequence(): BelongsTo
     {
         return $this->belongsTo(Sequence::class);
