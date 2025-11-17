@@ -2,6 +2,7 @@
 
 namespace Domain\Subscriber\Actions;
 
+use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Subscriber\Enums\Filters;
 use Domain\Subscriber\Filters\Filter;
@@ -12,19 +13,19 @@ use Symfony\Component\CssSelector\Node\FunctionNode;
 class FilterSubscribersAction
 {
 
-    public static function execute(Broadcast $broadcast)
+    public static function execute(Sendable $mail)
     {
         // $broadcast = Broadcast::find(1);
         return app(Pipeline::class)
         ->send(Subscriber::query())
-        ->through(self::filters($broadcast))
+        ->through(self::filters($mail))
         ->thenReturn()
         ->get();
     }
 
-    public static function filters(Broadcast $broadcast)
+    public static function filters(Sendable $mail)
     {
-        return collect($broadcast->filters->toArray())
+        return collect($mail->filters()->toArray())
         ->map(fn (array $ids, string $key) => Filters::from($key)->createFilter($ids))
         ->values()
         ->all();
