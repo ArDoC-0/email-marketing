@@ -13,7 +13,6 @@ class FilterSubscribersAction
 {
 
     public static function execute(Broadcast $broadcast)
-
     {
         // $broadcast = Broadcast::find(1);
         return app(Pipeline::class)

@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Models\Casts\Sequence\SequenceMailScheduleAllowedDaysCast;
+use Domain\Mail\Models\Casts\Sequence\SequenceMailScheduleUnitCast;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,7 +19,8 @@ class SequenceMailSchedule extends BaseModel
     ];
 
     protected $casts = [
-        'allowed_days' => SequenceMailScheduleAllowedDaysCast::class
+        'allowed_days' => SequenceMailScheduleAllowedDaysCast::class,
+        'unit' => SequenceMailScheduleUnitCast::class
     ];
 
     public function sequenceMail(): BelongsTo

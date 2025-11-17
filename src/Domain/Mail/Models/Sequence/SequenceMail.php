@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Contracts\Sendable;
+use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -24,6 +25,13 @@ class SequenceMail extends BaseModel implements Sendable
         $today = Str::lower(now()->dayName);
 
         return $this->schedule->allowed_days->{$today};
+    }
+
+    public function enoughTimePassedSince(SentMail $mail) : bool
+    {
+        return $this->schedule
+        ->unit
+        ->timePassedSince($mail->sent_at) >= $this->schedule->delay;
     }
 
     public function sequence(): BelongsTo

@@ -4,6 +4,7 @@ namespace Domain\Subscriber\Models;
 
 use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Concerns\WithData;
 use Domain\Shared\Models\BaseModel;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 // #[ScopedBy([Userscope::class])]
@@ -33,6 +35,18 @@ class Subscriber extends BaseModel
         'form_id',
         'user_id'
     ];
+
+    public function tooEarlyFor(SequenceMail $mail)
+    {
+        return !$mail->enoughTimePassedSince($this->last_received_mail);
+    }
+
+    public function last_received_mail() : HasOne
+    {
+        return $this->hasOne(SentMail::class)
+        ->latestOfMany()
+        ->withDefault();
+    }
 
     public function sequences(): BelongsToMany
     {
