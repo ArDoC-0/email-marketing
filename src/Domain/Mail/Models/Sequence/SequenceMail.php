@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Contracts\Sendable;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,10 @@ class SequenceMail extends BaseModel implements Sendable
 {
     protected $table = "sequence_mails";
 
+    protected $casts = [
+        'filters' => FilterData::class
+    ];
+    
     protected $fillable = [
         'subject',
         'content',
@@ -46,11 +51,27 @@ class SequenceMail extends BaseModel implements Sendable
 
     public function id() : int
     {
-        return $this->id;
+        return $this->id();
+    }
+
+    public function subject(): string
+    {
+        return $this->subject;
+    }
+
+    public function content(): string
+    {
+        return $this->content;
     }
 
     public function type() : string
     {
         return $this::class;
     }
+
+    public function filters(): FilterData
+    {
+        return $this->filters;
+    }
+
 }

@@ -7,7 +7,7 @@ use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Sequence extends BaseModel implements Sendable
+class Sequence extends BaseModel 
 {
     protected $table = 'sequences';
 
@@ -25,14 +25,5 @@ class Sequence extends BaseModel implements Sendable
     {
         return $this->hasMany(SequenceMail::class);
     }
-    
-    public function id() : int
-    {
-        return $this->id;
-    }
 
-    public function type() : string
-    {
-        return $this::class;
-    }
 }

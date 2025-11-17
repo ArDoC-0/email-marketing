@@ -6,6 +6,7 @@ use Domain\Mail\Builder\Broadcast\BroadcastBuilder;
 use Domain\Mail\Concerns\HasPerformance;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Models\Casts\FilterCasts;
 use Domain\Mail\Models\SentMail;
@@ -36,9 +37,24 @@ class Broadcast extends BaseModel implements Sendable
         return $this->id();
     }
 
+    public function subject(): string
+    {
+        return $this->subject;
+    }
+
+    public function content(): string
+    {
+        return $this->content;
+    }
+
     public function type() : string
     {
         return $this::class;
+    }
+
+    public function filters(): FilterData
+    {
+        return $this->filters;
     }
 
     public function newEloquentBuilder($query) : BroadcastBuilder
