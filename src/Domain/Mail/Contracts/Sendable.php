@@ -26,8 +26,4 @@ interface Sendable
      */
     public function type() : string;
 
-    /**
-     * Get Sendable filters
-     */
-    public function filters() : FilterData;
 }
