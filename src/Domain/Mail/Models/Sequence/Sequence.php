@@ -1,6 +1,7 @@
 <?php
 namespace Domain\Mail\Models\Sequence;
 
+use Domain\Mail\Builder\Sequence\SequenceBuilder;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
@@ -24,6 +25,11 @@ class Sequence extends BaseModel
     public function sequence_mails(): HasMany
     {
         return $this->hasMany(SequenceMail::class);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new SequenceBuilder($query);
     }
 
 }
