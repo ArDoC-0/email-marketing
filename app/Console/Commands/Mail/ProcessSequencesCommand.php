@@ -22,7 +22,7 @@ class ProcessSequencesCommand extends Command
         })
         ->count();
 
-        $this->info("{$count} sequenes have been proceeded");
+        $this->info("{$count} sequences have been proceeded");
 
         return self::SUCCESS;
     }
