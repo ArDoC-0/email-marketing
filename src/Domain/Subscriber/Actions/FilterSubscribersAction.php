@@ -4,6 +4,8 @@ namespace Domain\Subscriber\Actions;
 
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Subscriber\Enums\Filters;
 use Domain\Subscriber\Filters\Filter;
 use Domain\Subscriber\Models\Subscriber;
@@ -16,8 +18,19 @@ class FilterSubscribersAction
     public static function execute(Sendable $mail)
     {
         // $broadcast = Broadcast::find(1);
+        $subscribers = Subscriber::query();
+
+        if($mail instanceof SequenceMail)
+        {
+            $subscribers = Subscriber::query()
+            ->whereIn(
+                'id',
+                $mail->sequence->subscribers()->select('subscribers.id')->pluck('id')
+            );
+        }
+
         return app(Pipeline::class)
-        ->send(Subscriber::query())
+        ->send($subscribers)
         ->through(self::filters($mail))
         ->thenReturn()
         ->get();
