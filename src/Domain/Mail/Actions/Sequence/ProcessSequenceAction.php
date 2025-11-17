@@ -41,8 +41,8 @@ class ProcessSequenceAction
             return collect([]);
         }
 
-        return FilterSubscribersAction::execute($mail)
-            ->reject->alreadyReceivedMail($mail)
-            ->reject->tooEarlyFor($mail);
+        return $mail->audience()
+        ->reject->alreadyReceivedMail($mail)
+        ->reject->tooEarlyFor($mail);
     }
 }

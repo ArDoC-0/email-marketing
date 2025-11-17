@@ -4,8 +4,11 @@ namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\Models\Concerns\HasAudience;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
+use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,6 +16,8 @@ use Illuminate\Support\Str;
 
 class SequenceMail extends BaseModel implements Sendable
 {
+    use HasAudience;
+
     protected $table = "sequence_mails";
 
     protected $casts = [
@@ -78,6 +83,14 @@ class SequenceMail extends BaseModel implements Sendable
     public function filters(): FilterData
     {
         return $this->filters;
+    }
+
+    public function audienceQuery(): Builder
+    {
+        return Subscriber::whereIn(
+            'id',
+            $this->sequence->subscribers()->select("subscribers.id")->pluck('id')
+        );
     }
 
 }

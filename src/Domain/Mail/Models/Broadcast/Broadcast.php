@@ -9,12 +9,16 @@ use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Models\Casts\FilterCasts;
+use Domain\Mail\Models\Concerns\HasAudience;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Models\BaseModel;
+use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class Broadcast extends BaseModel implements Sendable
 {
+    use HasAudience;
     use HasUser;
     use HasPerformance;
     
@@ -55,6 +59,11 @@ class Broadcast extends BaseModel implements Sendable
     public function filters(): FilterData
     {
         return $this->filters;
+    }
+
+    public function audienceQuery(): Builder
+    {
+        return Subscriber::query();
     }
 
     public function newEloquentBuilder($query) : BroadcastBuilder
