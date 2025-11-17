@@ -3,6 +3,7 @@ namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builder\Sequence\SequenceBuilder;
 use Domain\Mail\Contracts\Sendable;
+use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sequence extends BaseModel 
 {
+    use HasUser;
+    
     protected $table = 'sequences';
 
     protected $fillable = [

@@ -4,6 +4,7 @@ namespace Domain\Mail\Actions\Sequence;
 
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Subscriber;
@@ -15,7 +16,7 @@ class CreateSequenceAction
     {
         return DB::transaction(function () use ($data, $user){
 
-            $sequence = SequenceMail::create([
+            $sequence = Sequence::create([
                 ...$data->all(),
                 'user_id' => $user->id
             ]);

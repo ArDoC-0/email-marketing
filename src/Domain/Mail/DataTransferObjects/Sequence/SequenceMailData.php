@@ -11,6 +11,7 @@ use Spatie\LaravelData\Data;
 class SequenceMailData extends Data
 {
     public function __construct(
+        public readonly ?int $id = null,
         public readonly ?string $subject,
         public readonly ?string $content,
 
