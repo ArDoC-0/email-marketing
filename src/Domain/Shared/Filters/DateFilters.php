@@ -1,4 +1,5 @@
 <?php
+
 namespace Domain\Shared\Filters;
 
 use Carbon\Carbon;
