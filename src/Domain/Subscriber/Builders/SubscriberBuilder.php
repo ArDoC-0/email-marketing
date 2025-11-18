@@ -4,6 +4,7 @@ namespace Domain\Subscriber\Builders;
 
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
+use Domain\Shared\Filters\DateFilters;
 use Illuminate\Database\Eloquent\Builder;
 
 class SubscriberBuilder extends Builder
@@ -16,5 +17,10 @@ class SubscriberBuilder extends Builder
     public function whereSequence(Sequence $sequence)
     {
         return $this->whereBelongsTo($sequence);
+    }
+
+    public function whereSubscribedBetween(DateFilters $date)
+    {
+        return $this->whereBetween('subscribed_at', $date->toArray());
     }
 }
