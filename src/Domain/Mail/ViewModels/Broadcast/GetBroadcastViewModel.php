@@ -19,20 +19,10 @@ class GetBroadcastViewModel extends ViewModel
     public function performances(): Collection
     {
 
-        /**
-         * Lazy loading performance attribute
-         */
         return Broadcast::all()
-            ->each->append('perfomance');
-
-        /**
-         * Perfomance issues
-         */
-        
-        // return Broadcast::all()
-        // ->mapWithKeys(fn (Broadcast $broadcast) => [
-        //     $broadcast->id => GetPerformanceAction::execute($broadcast)
-        // ]);
+        ->mapWithKeys(fn (Broadcast $broadcast) => [
+            $broadcast->id => $broadcast->performance()
+        ]);
 
     }
 }

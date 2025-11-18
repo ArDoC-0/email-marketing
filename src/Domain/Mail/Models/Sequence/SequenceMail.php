@@ -4,7 +4,9 @@ namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\Models\Concerns\HasAudience;
+use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
@@ -17,6 +19,7 @@ use Illuminate\Support\Str;
 class SequenceMail extends BaseModel implements Sendable
 {
     use HasAudience;
+    use HasPerformance;
 
     protected $table = "sequence_mails";
 
@@ -90,6 +93,17 @@ class SequenceMail extends BaseModel implements Sendable
         return Subscriber::whereIn(
             'id',
             $this->sequence->subscribers()->select("subscribers.id")->pluck('id')
+        );
+    }
+
+    public function performance(): PerformanceData
+    {
+        $total = SentMail::countOf($this);
+        
+        return PerformanceData::from(
+            total: $total,
+            open_rate: $this->openRate($total),
+            click_rate: $this->clickRate($total)
         );
     }
 
