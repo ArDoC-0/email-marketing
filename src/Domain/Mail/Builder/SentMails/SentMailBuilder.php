@@ -5,11 +5,17 @@ namespace Domain\Mail\Builder\SentMails;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ValueObject\Percent;
 use Illuminate\Database\Eloquent\Builder;
 
 class SentMailBuilder extends Builder
 {
+
+    public function whereSequence(Sequence $sequence)
+    {
+        return $this->whereBelongsTo($sequence);
+    }
 
     public function wherePublished()
     {
