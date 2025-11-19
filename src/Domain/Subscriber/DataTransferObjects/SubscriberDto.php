@@ -39,4 +39,12 @@ class SubscriberDto extends CommonDto
             form: FormDto::fromArray(Form::find($request->form_id)?->toArray())
         );
     }
+
+    public function whenSubscriberdedViaForm(callable $callback)
+    {
+        if(!$this->id && $this->form)
+        {
+            $callback();
+        }
+    }
 }
