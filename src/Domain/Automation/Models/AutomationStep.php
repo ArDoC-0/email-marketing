@@ -1,0 +1,21 @@
+<?php
+
+namespace Domain\Automation\Models;
+
+use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class AutomationStep extends BaseModel
+{
+    protected $fillable = [
+        'name',
+        'type',
+        'value',
+        'automation_id'
+    ];
+
+    public function automation() : BelongsTo
+    {
+        return $this->belongsTo(Automation::class);
+    }
+}
