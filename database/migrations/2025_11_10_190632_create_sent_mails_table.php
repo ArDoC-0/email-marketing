@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('broadcasts', function (Blueprint $table) {
+        Schema::create('sent_mails', function (Blueprint $table) {
             $table->id();
-            $table->string('subject');
-            $table->text('content');
-            $table->json('filters');
-            $table->string('status')->default('draft');
-            $table->foreignId('user_id');
-            $table->timestamp('sent_at');
+            $table->string('sendable_type');
+            $table->foreignId('subscriber_id')->constrained('subscribers');
+            $table->foreignId('user_id')->constrained('users');
+            $table->timestamp('opened_at');
+            $table->timestamp('clicked_at');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('broadcasts');
+        Schema::dropIfExists('sent_mails');
     }
 };
