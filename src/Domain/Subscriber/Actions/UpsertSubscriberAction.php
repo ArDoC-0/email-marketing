@@ -1,6 +1,7 @@
 <?php
 namespace Domain\Subscriber\Actions;
 
+use Domain\Automation\Events\SubscribedToFormEvent;
 use Domain\Shared\Models\User;
 use Domain\Subscriber\DataTransferObjects\SubscriberDto;
 use Domain\Subscriber\Models\Subscriber;
@@ -21,6 +22,10 @@ class UpsertSubscriberAction
             ]);
 
         $subscriber->tags()->sync($data->tags->pluck('id'));
+
+        $data->whenSubscriberdedViaForm(
+            event(new SubscribedToFormEvent($subscriber, $user))
+        );
 
         return $subscriber->load('form', 'tags');
     }

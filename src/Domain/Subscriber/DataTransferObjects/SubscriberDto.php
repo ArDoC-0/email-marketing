@@ -2,6 +2,7 @@
 namespace Domain\Subscriber\DataTransferObjects;
 
 use App\Http\Requests\Subscriber\SubscriberRequest;
+use Carbon\Carbon;
 use Domain\Shared\CommonDto\CommonDto;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Tag;
@@ -18,6 +19,7 @@ class SubscriberDto extends CommonDto
         public readonly string $first_name,
         public readonly string $last_name,
 
+        public readonly ?Carbon $subscribed_at,
         public readonly null|SupportCollection|Collection $tags,
         public readonly ?FormDto $form
     )
@@ -36,5 +38,13 @@ class SubscriberDto extends CommonDto
             ),
             form: FormDto::fromArray(Form::find($request->form_id)?->toArray())
         );
+    }
+
+    public function whenSubscriberdedViaForm(callable $callback)
+    {
+        if(!$this->id && $this->form)
+        {
+            $callback();
+        }
     }
 }
