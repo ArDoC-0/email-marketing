@@ -3,17 +3,23 @@
 namespace Domain\Mail\Models\Broadcast;
 
 use Domain\Mail\Builder\Broadcast\BroadcastBuilder;
-use Domain\Mail\Concerns\HasPerformance;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
+use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Models\Casts\FilterCasts;
+use Domain\Mail\Models\Concerns\HasAudience;
+use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Concerns\HasUser;
 use Domain\Shared\Models\BaseModel;
+use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class Broadcast extends BaseModel implements Sendable
 {
+    use HasAudience;
     use HasUser;
     use HasPerformance;
     
@@ -36,9 +42,29 @@ class Broadcast extends BaseModel implements Sendable
         return $this->id();
     }
 
+    public function subject(): string
+    {
+        return $this->subject;
+    }
+
+    public function content(): string
+    {
+        return $this->content;
+    }
+
     public function type() : string
     {
         return $this::class;
+    }
+
+    public function filters(): FilterData
+    {
+        return $this->filters;
+    }
+
+    public function audienceQuery(): Builder
+    {
+        return Subscriber::query();
     }
 
     public function newEloquentBuilder($query) : BroadcastBuilder
@@ -49,5 +75,16 @@ class Broadcast extends BaseModel implements Sendable
     public function sent_mails()
     {
         return $this->morphMany(SentMail::class, 'sendable');
+    }
+
+    public function performance(): PerformanceData
+    {
+        $total = SentMail::countOf($this);
+        
+        return PerformanceData::from(
+            total: $total,
+            open_rate: $this->openRate($total),
+            click_rate: $this->clickRate($total)
+        );
     }
 }

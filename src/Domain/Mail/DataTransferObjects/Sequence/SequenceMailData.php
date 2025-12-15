@@ -1,0 +1,42 @@
+<?php
+
+namespace Domain\Mail\DataTransferObjects\Sequence;
+
+use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\Enums\Sequence\SequenceMailStatus;
+use Domain\Mail\Enums\Sequence\SequenceStatus;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Data;
+
+class SequenceMailData extends Data
+{
+    public function __construct(
+        public readonly ?int $id = null,
+        public readonly ?string $subject,
+        public readonly ?string $content,
+
+        #[WithCast(SequenceStatus::class)]
+        public readonly SequenceMailStatus $status = SequenceMailStatus::Draft,
+        public readonly FilterData $filters,
+        public readonly array $schedule
+    )
+    {
+        
+    }
+
+    public static function dummy()
+    {
+        return self::from([
+            'subject' => "welcome to my awesome email",
+            'content' => "welcome to my awesome email",
+            'status' => SequenceMailStatus::Draft,
+            'filters' => FilterData::empty(),
+            'schedule'=> [
+                'delay' =>1,
+                'unit' => 'day',
+                'allowed_days' => SequenceMailAllowedDaysData::empty()
+            ]
+            
+        ]);
+    }
+}

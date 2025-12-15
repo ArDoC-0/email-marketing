@@ -19,12 +19,12 @@ class SendBroadcastAction
             throw CannotSendBroadcast::broadcastAlreadySent($broadcast->sent_at);
         }
 
-        $subscribers = FilterSubscribersAction::execute($broadcast)->each(
+        $subscribers = $broadcast->audience()->each(
             function (Subscriber $subscriber) use ($broadcast){
                 Mail::to($subscriber)->queue(new EchoMail($broadcast));
             }
         );
-
+        
         $broadcast->markAsSent();
 
         return $subscribers->each(function (Subscriber $subscriber) use ($broadcast){

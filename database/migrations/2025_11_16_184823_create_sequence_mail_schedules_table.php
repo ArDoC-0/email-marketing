@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('broadcasts', function (Blueprint $table) {
+        Schema::create('sequence_mail_schedules', function (Blueprint $table) {
             $table->id();
-            $table->string('subject');
-            $table->text('content');
-            $table->json('filters');
-            $table->string('status')->default('draft');
-            $table->foreignId('user_id');
-            $table->timestamp('sent_at')->nullable();
+            $table->foreignId('sequence_mail_id');
+            $table->json('allowed_days');
+            $table->string('unit');
+            $table->integer('delay');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('broadcasts');
+        Schema::dropIfExists('sequence_mail_schedules');
     }
 };
